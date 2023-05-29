@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Fighting Tag Blur",
+  "version": "1.0",
+  "description": "Una extensión que borra la barra/indicador de tiempo en videos de YouTube con etiquetas de lucha.",
+  "permissions": ["scripting", "activeTab"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["contentScript.js"]
+    }
+  ],
+  "icons": {
+    "128": "icon128.png"
+  },
+  "background": {
+    "service_worker": "backgroundScript.js"
+  }
+}
