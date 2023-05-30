@@ -7,7 +7,18 @@ function hasFightingTag() {
     const tags = Array.from(
       tagsContainer.querySelectorAll(".ytd-metadata-row-renderer a")
     );
-    const fightingTags = ["fight", "mma", "kickboxing", "muay thai", "bjj", "karate", "judo", "amateur", "semi-pro", "pro"];
+    const fightingTags = [
+      "fight",
+      "mma",
+      "kickboxing",
+      "muay thai",
+      "bjj",
+      "karate",
+      "judo",
+      "amateur",
+      "semi-pro",
+      "pro",
+    ];
     return tags.some((tag) => {
       const tagText = tag.textContent.toLowerCase();
       return fightingTags.some((fightingTag) => tagText.includes(fightingTag));
@@ -32,6 +43,43 @@ function hideDuration() {
   }
 }
 
+function hideSuggestedVideoDurations() {
+  const suggestedVideos = document.querySelectorAll(
+    ".ytd-watch-next-secondary-results-renderer .ytd-thumbnail-overlay-time-status-renderer"
+  );
+  suggestedVideos.forEach((video) => {
+    video.style.display = "none";
+  });
+}
+
+// Verificar si hay una etiqueta de lucha y ocultar la barra/indicador de tiempo, la duración del video y la duración de los videos sugeridos si corresponde
+function hideIfhasFightingTag() {
+  if (hasFightingTag()) {
+    hideTimeBar();
+    hideDuration();
+    hideSuggestedVideoDurations();
+  } else {
+    showTimeBar();
+    showDuration();
+  }
+}
+
+// Función para mostrar la barra/indicador de tiempo
+function showTimeBar() {
+  const timeBar = document.querySelector(".ytp-progress-bar-container");
+  if (timeBar) {
+    timeBar.style.display = "";
+  }
+}
+
+// Función para mostrar la duración del video
+function showDuration() {
+  const duration = document.querySelector(".ytp-time-duration");
+  if (duration) {
+    duration.style.display = "";
+  }
+}
+
 // Manejar el mensaje del script de la interfaz emergente
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   if (message.action === "toggleHideTimeBar") {
@@ -43,13 +91,10 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
       } else {
         timeBar.style.display = "none";
         hideDuration();
+        hideSuggestedVideoDurations();
       }
     }
   }
 });
 
-// Verificar si hay una etiqueta de lucha y ocultar la barra/indicador de tiempo y la duración del video si corresponde
-if (hasFightingTag()) {
-  hideTimeBar();
-  hideDuration();
-}
+hideIfhasFightingTag();
