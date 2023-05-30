@@ -7,37 +7,20 @@ function hasFightingTag() {
     const tags = Array.from(
       tagsContainer.querySelectorAll(".ytd-metadata-row-renderer a")
     );
+    const fightingTags = ["fight", "mma", "kickboxing", "muay thai", "bjj", "karate", "judo", "amateur", "semi-pro", "pro"];
     return tags.some((tag) => {
       const tagText = tag.textContent.toLowerCase();
-      return (
-        tagText.includes("fight") ||
-        tagText.includes("mma") ||
-        tagText.includes("kickboxing") ||
-        tagText.includes("muay thai") ||
-        tagText.includes("bjj") ||
-        tagText.includes("karate") ||
-        tagText.includes("judo") ||
-        tagText.includes("amateur") ||
-        tagText.includes("semi-pro") ||
-        tagText.includes("pro")
-      );
+      return fightingTags.some((fightingTag) => tagText.includes(fightingTag));
     });
   }
   return false;
 }
+
 // Función para ocultar la barra/indicador de tiempo
 function hideTimeBar() {
   const timeBar = document.querySelector(".ytp-progress-bar-container");
   if (timeBar) {
     timeBar.style.display = "none";
-  }
-}
-
-// Función para mostrar la duración del video
-function showDuration() {
-  const duration = document.querySelector(".ytp-time-duration");
-  if (duration) {
-    duration.style.display = "";
   }
 }
 
