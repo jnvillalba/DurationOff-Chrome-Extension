@@ -43,6 +43,7 @@ function hideDuration() {
   }
 }
 
+// Función para ocultar la duración de los videos sugeridos
 function hideSuggestedVideoDurations() {
   const suggestedVideos = document.querySelectorAll(
     ".ytd-watch-next-secondary-results-renderer .ytd-thumbnail-overlay-time-status-renderer"
@@ -52,8 +53,18 @@ function hideSuggestedVideoDurations() {
   });
 }
 
-// Verificar si hay una etiqueta de lucha y ocultar la barra/indicador de tiempo, la duración del video y la duración de los videos sugeridos si corresponde
-function hideIfhasFightingTag() {
+// Función para mostrar la duración de los videos sugeridos
+function showSuggestedVideoDurations() {
+  const suggestedVideos = document.querySelectorAll(
+    ".ytd-watch-next-secondary-results-renderer .ytd-thumbnail-overlay-time-status-renderer"
+  );
+  suggestedVideos.forEach((video) => {
+    video.style.display = "";
+  });
+}
+
+// Verificar si hay una etiqueta de lucha y ocultar/mostrar los elementos correspondientes si corresponde
+function handleFightingTag() {
   if (hasFightingTag()) {
     hideTimeBar();
     hideDuration();
@@ -61,6 +72,7 @@ function hideIfhasFightingTag() {
   } else {
     showTimeBar();
     showDuration();
+    showSuggestedVideoDurations();
   }
 }
 
@@ -88,6 +100,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
       if (timeBar.style.display === "none") {
         timeBar.style.display = "";
         showDuration();
+        showSuggestedVideoDurations();
       } else {
         timeBar.style.display = "none";
         hideDuration();
@@ -97,4 +110,5 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   }
 });
 
-hideIfhasFightingTag();
+// Ocultar/mostrar los elementos según las etiquetas de lucha
+handleFightingTag();
