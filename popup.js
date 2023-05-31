@@ -8,3 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+//TODO
+//que recuerde la eleccion local y en todas las pestañas
