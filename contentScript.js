@@ -1,29 +1,38 @@
 // Verificar si una etiqueta de lucha está presente en la página
 function hasFightingTag() {
-  const tagsContainer = document.querySelector(
-    ".ytd-video-primary-info-renderer .ytd-metadata-row-container-renderer"
+  const videoPrimaryInfoRenderer = document.querySelector(
+    "ytd-video-primary-info-renderer"
   );
-  if (tagsContainer) {
-    const tags = Array.from(
-      tagsContainer.querySelectorAll(".ytd-metadata-row-renderer a")
+
+  if (videoPrimaryInfoRenderer) {
+    const tagsContainer = videoPrimaryInfoRenderer.querySelector(
+      ".super-title > yt-formatted-string"
     );
-    const fightingTags = [
-      "fight",
-      "mma",
-      "kickboxing",
-      "muay thai",
-      "bjj",
-      "karate",
-      "judo",
-      "amateur",
-      "semi-pro",
-      "pro",
-    ];
-    return tags.some((tag) => {
-      const tagText = tag.textContent.toLowerCase();
-      return fightingTags.some((fightingTag) => tagText.includes(fightingTag));
-    });
+
+    if (tagsContainer) {
+      const tags = Array.from(tagsContainer.querySelectorAll("a"));
+      const fightingTags = [
+        "fight",
+        "mma",
+        "kickboxing",
+        "muay thai",
+        "bjj",
+        "karate",
+        "judo",
+        "amateur",
+        "semi-pro",
+        "pro",
+      ];
+
+      return tags.some((tag) => {
+        const tagText = tag.textContent.toLowerCase();
+        return fightingTags.some((fightingTag) =>
+          tagText.includes(fightingTag)
+        );
+      });
+    }
   }
+
   return false;
 }
 
@@ -42,6 +51,13 @@ function hideDuration() {
     duration.style.display = "none";
   }
 }
+function hideSlash() {
+  const separator = document.querySelector(".ytp-time-separator");
+  if (separator) {
+    separator.style.display = "none";
+  }
+}
+
 
 // Función para ocultar la duración de los videos sugeridos
 function hideSuggestedVideoDurations() {
@@ -61,6 +77,13 @@ function showSuggestedVideoDurations() {
   suggestedVideos.forEach((video) => {
     video.style.display = "";
   });
+}
+
+function showSlash() {
+  const separator = document.querySelector(".ytp-time-separator");
+  if (separator) {
+    separator.style.display = "";
+  }
 }
 
 // Verificar si hay una etiqueta de lucha y ocultar/mostrar los elementos correspondientes si corresponde
@@ -101,10 +124,12 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         timeBar.style.display = "";
         showDuration();
         showSuggestedVideoDurations();
+        showSlash();
       } else {
         timeBar.style.display = "none";
         hideDuration();
         hideSuggestedVideoDurations();
+        hideSlash();
       }
     }
   }
@@ -112,3 +137,8 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
 // Ocultar/mostrar los elementos según las etiquetas de lucha
 handleFightingTag();
+
+//TODO
+//Ocultar cuando se busca videos
+//Mejorar HTML
+//que se active solo si hay etiquetas de lucha
