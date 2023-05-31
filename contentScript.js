@@ -1,41 +1,3 @@
-// Verificar si una etiqueta de lucha está presente en la página
-function hasFightingTag() {
-  const videoPrimaryInfoRenderer = document.querySelector(
-    "ytd-video-primary-info-renderer"
-  );
-
-  if (videoPrimaryInfoRenderer) {
-    const tagsContainer = videoPrimaryInfoRenderer.querySelector(
-      ".super-title > yt-formatted-string"
-    );
-
-    if (tagsContainer) {
-      const tags = Array.from(tagsContainer.querySelectorAll("a"));
-      const fightingTags = [
-        "fight",
-        "mma",
-        "kickboxing",
-        "muay thai",
-        "bjj",
-        "karate",
-        "judo",
-        "amateur",
-        "semi-pro",
-        "pro",
-      ];
-
-      return tags.some((tag) => {
-        const tagText = tag.textContent.toLowerCase();
-        return fightingTags.some((fightingTag) =>
-          tagText.includes(fightingTag)
-        );
-      });
-    }
-  }
-
-  return false;
-}
-
 // Función para ocultar la barra/indicador de tiempo
 function hideTimeBar() {
   const timeBar = document.querySelector(".ytp-progress-bar-container");
@@ -85,19 +47,6 @@ function showSlash() {
   }
 }
 
-// Verificar si hay una etiqueta de lucha y ocultar/mostrar los elementos correspondientes si corresponde
-function handleFightingTag() {
-  if (hasFightingTag()) {
-    hideTimeBar();
-    hideDuration();
-    hideSuggestedVideoDurations();
-  } else {
-    showTimeBar();
-    showDuration();
-    showSuggestedVideoDurations();
-  }
-}
-
 // Función para mostrar la barra/indicador de tiempo
 function showTimeBar() {
   const timeBar = document.querySelector(".ytp-progress-bar-container");
@@ -133,11 +82,3 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
   }
 });
-
-// Ocultar/mostrar los elementos según las etiquetas de lucha
-handleFightingTag();
-
-//TODO
-//Ocultar cuando se busca videos
-//Mejorar HTML
-//que se active solo si hay etiquetas de lucha
