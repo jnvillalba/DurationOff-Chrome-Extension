@@ -2,64 +2,88 @@
 const TIME_BAR_CLASS = ".ytp-progress-bar-container";
 const DURATION_CLASS = ".ytp-time-duration";
 const SLASH_CLASS = ".ytp-time-separator";
-const SUGGESTED_VIDEOS_CLASS =
-  ".ytd-watch-next-secondary-results-renderer .ytd-thumbnail-overlay-time-status-renderer";
+const SUGGESTED_VIDEOS_CLASS = ".ytd-watch-next-secondary-results-renderer .ytd-thumbnail-overlay-time-status-renderer";
+const SEARCH_RESULT_TIMESTAMP_CLASS = ".ytd-thumbnail-overlay-time-status-renderer";
+const HOME_VIDEO_CLASS = ".style-scope .ytd-thumbnail-overlay-time-status-renderer";
 
-// Función auxiliar para alternar la visualización de un elemento
-function toggleElementDisplay(selector) {
+function toggleElementDisplay(selector, hide) {
   const element = document.querySelector(selector);
   if (element) {
-    element.style.display = element.style.display === "none" ? "" : "none";
+    element.style.display = hide ? "none" : "";
   }
 }
 
-// Función para ocultar la barra/indicador de tiempo
+function toggleElementsVisibility(selector, hide) {
+  const elements = document.querySelectorAll(selector);
+  elements.forEach((element) => {
+    element.style.display = hide ? "none" : "inline-block";
+  });
+}
+
+function toggleHomeVideoDurations(hide) {
+  toggleElementsVisibility(HOME_VIDEO_CLASS, hide);
+}
+
+function toggleSearchVideoDurations(hide) {
+  toggleElementsVisibility(SEARCH_RESULT_TIMESTAMP_CLASS, hide);
+}
+
 function hideTimeBar() {
-  toggleElementDisplay(TIME_BAR_CLASS);
+  toggleElementDisplay(TIME_BAR_CLASS, true);
   hideDuration();
   hideSuggestedVideoDurations();
   hideSlash();
+  hideSearchVideoDurations();
+  hideHomeVideoDurations();
 }
 
-// Función para mostrar la barra/indicador de tiempo
 function showTimeBar() {
-  toggleElementDisplay(TIME_BAR_CLASS);
+  toggleElementDisplay(TIME_BAR_CLASS, false);
   showDuration();
   showSuggestedVideoDurations();
   showSlash();
+  showSearchVideoDurations();
+  showHomeVideoDurations();
 }
 
-// Función para ocultar la duración del video
 function hideDuration() {
-  toggleElementDisplay(DURATION_CLASS);
+  toggleElementDisplay(DURATION_CLASS, true);
 }
 
-// Función para mostrar la duración del video
 function showDuration() {
-  toggleElementDisplay(DURATION_CLASS);
+  toggleElementDisplay(DURATION_CLASS, false);
 }
 
-// Función para ocultar el separador de tiempo
 function hideSlash() {
-  toggleElementDisplay(SLASH_CLASS);
+  toggleElementDisplay(SLASH_CLASS, true);
 }
 
-// Función para ocultar la duración de los videos sugeridos
+function showSlash() {
+  toggleElementDisplay(SLASH_CLASS, false);
+}
+
+function showHomeVideoDurations() {
+  toggleHomeVideoDurations(false);
+}
+
+function hideHomeVideoDurations() {
+  toggleHomeVideoDurations(true);
+}
+
+function hideSearchVideoDurations() {
+  toggleSearchVideoDurations(true);
+}
+
+function showSearchVideoDurations() {
+  toggleSearchVideoDurations(false);
+}
+
 function hideSuggestedVideoDurations() {
-  toggleSuggestedVideoDurations(true);
+  toggleElementsVisibility(SUGGESTED_VIDEOS_CLASS, true);
 }
 
-// Función para mostrar la duración de los videos sugeridos
 function showSuggestedVideoDurations() {
-  toggleSuggestedVideoDurations(false);
-}
-
-// Función auxiliar para ocultar o mostrar la duración de los videos sugeridos
-function toggleSuggestedVideoDurations(hide) {
-  const suggestedVideos = document.querySelectorAll(SUGGESTED_VIDEOS_CLASS);
-  suggestedVideos.forEach((video) => {
-    video.style.display = hide ? "none" : "";
-  });
+  toggleElementsVisibility(SUGGESTED_VIDEOS_CLASS, false);
 }
 
 // Manejar el mensaje del script de la interfaz emergente
