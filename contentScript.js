@@ -58,7 +58,6 @@ function hideSlash() {
   }
 }
 
-
 // Función para ocultar la duración de los videos sugeridos
 function hideSuggestedVideoDurations() {
   const suggestedVideos = document.querySelectorAll(
