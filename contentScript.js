@@ -99,3 +99,24 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
   }
 });
+// Observador de mutaciones para ocultar las duraciones de los videos sugeridos y en los resultados de búsqueda
+const observer = new MutationObserver(function (mutations) {
+  mutations.forEach(function (mutation) {
+    const addedNodes = mutation.addedNodes;
+    if (addedNodes && addedNodes.length > 0) {
+      addedNodes.forEach(function (node) {
+        if (node.matches) {
+          if (node.matches(SUGGESTED_VIDEOS_CLASS)) {
+            toggleElementsVisibility(SUGGESTED_VIDEOS_CLASS, true);
+          }
+          if (node.matches(SEARCH_RESULT_TIMESTAMP_CLASS)) {
+            toggleSearchVideoDurations(true);
+          }
+        }
+      });
+    }
+  });
+});
+
+// Observar cambios en el DOM para ocultar las duraciones de los videos sugeridos y en los resultados de búsqueda
+observer.observe(document, { childList: true, subtree: true });

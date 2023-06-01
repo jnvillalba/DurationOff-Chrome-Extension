@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Fighting Tag Blur",
+  "name": "YouTube DurationOff",
   "version": "1.0",
   "description": "Una extensión que borra la barra/indicador de tiempo en videos de YouTube con etiquetas de lucha.",
   "permissions": ["scripting", "activeTab"],
