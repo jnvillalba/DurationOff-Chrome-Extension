@@ -2,8 +2,8 @@
   "manifest_version": 3,
   "name": "YouTube DurationOff",
   "version": "1.0",
-  "description": "Una extensión que borra la barra/indicador de tiempo en videos de YouTube con etiquetas de lucha.",
-  "permissions": ["scripting", "activeTab"],
+  "description": "Permite disfrutar de una experiencia de visualización más inmersiva en YouTube al eliminar la barra/indicador de tiempo y las sugerencias de video mientras ves cualquier contenido.",
+  "permissions": ["scripting", "activeTab", "storage"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
