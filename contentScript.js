@@ -2,9 +2,12 @@
 const TIME_BAR_CLASS = ".ytp-progress-bar-container";
 const DURATION_CLASS = ".ytp-time-duration";
 const SLASH_CLASS = ".ytp-time-separator";
-const SUGGESTED_VIDEOS_CLASS = ".ytd-watch-next-secondary-results-renderer .ytd-thumbnail-overlay-time-status-renderer";
-const SEARCH_RESULT_TIMESTAMP_CLASS = ".ytd-thumbnail-overlay-time-status-renderer";
-const HOME_VIDEO_CLASS = ".style-scope .ytd-thumbnail-overlay-time-status-renderer";
+const SUGGESTED_VIDEOS_CLASS =
+  ".ytd-watch-next-secondary-results-renderer .ytd-thumbnail-overlay-time-status-renderer";
+const SEARCH_RESULT_TIMESTAMP_CLASS =
+  ".ytd-thumbnail-overlay-time-status-renderer";
+const HOME_VIDEO_CLASS =
+  ".style-scope .ytd-thumbnail-overlay-time-status-renderer";
 
 function toggleElementDisplay(selector, hide) {
   const element = document.querySelector(selector);
@@ -118,5 +121,13 @@ const observer = new MutationObserver(function (mutations) {
   });
 });
 
-// Observar cambios en el DOM para ocultar las duraciones de los videos sugeridos y en los resultados de búsqueda
-observer.observe(document, { childList: true, subtree: true });
+// Obtener el estado del interruptor del almacenamiento local
+chrome.storage.local.get("switchState", function (result) {
+  const switchState = result.switchState;
+
+  // Verificar si el interruptor está activado
+  if (switchState === "enabled") {
+    // Observar cambios en el DOM para ocultar las duraciones de los videos sugeridos y en los resultados de búsqueda
+    observer.observe(document, { childList: true, subtree: true });
+  }
+});
